@@ -1,0 +1,8 @@
+---
+# tasks file for puppet
+- name: Instalando o Puppet
+  hosts: all
+  tasks:
+   - include: repo.yml
+   - include: instalar.yml
+   - include: agent.yml

@@ -1,0 +1,21 @@
+- name: Download Repo Debian
+  get_url:
+   url: https://apt.puppetlabs.com/puppet5-release-xenial.deb
+   dest: /tmp/puppet.deb
+  when: ansible_os_family == "Debian"
+
+- name: Instalar Repo Debian
+  apt:
+   deb: /tmp/puppet.deb
+  when: ansible_os_family == "Debian"
+
+- name: Download Repo Centos
+  get_url:
+   url: https://yum.puppet.com/puppet5/puppet5-release-el-7.noarch.rpm
+   dest: /tmp/puppet.rpm
+  when: ansible_os_family == "RedHat"
+
+- name: Instalar Repo Centos
+  yum:
+   name: /tmp/puppet.rpm
+  when: ansible_os_family == "RedHat"

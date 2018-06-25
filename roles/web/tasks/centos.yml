@@ -1,0 +1,19 @@
+- name: instalando no debian
+  yum:
+   name: "{{ item }}"
+   state: present
+  when: ansible_os_family == "RedHat"
+  with_items:
+    - httpd
+
+- name: habilitar apache
+  service:
+   name: httpd
+   state: started
+  when: ansible_os_family == "RedHat"
+
+- name: parando firewalld
+  service:
+   name: firewalld
+   state: stopped
+  when: ansible_os_family == "RedHat"

@@ -1,0 +1,13 @@
+- name: instalando no debian
+  apt:
+   name: "{{ item }}"
+   state: present
+  when: ansible_os_family == "Debian"
+  with_items:
+   - apache2
+
+- name: habilitar apache
+  service:
+   name: apache2
+   state: started
+  when: ansible_os_family == "Debian"

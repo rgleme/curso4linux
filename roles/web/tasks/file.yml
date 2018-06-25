@@ -1,0 +1,4 @@
+- name: enviando arquivo index
+  copy:
+   src: ../files/index.php
+   dest: /var/www/html/index.html

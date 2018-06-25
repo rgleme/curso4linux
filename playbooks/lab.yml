@@ -1,0 +1,43 @@
+---
+- name: Pacotes basicos do sistemas
+  hosts: all
+  tasks:
+   - name: instalando pacotes debian
+     apt:
+      name: "{{ item }}"
+      state: present
+     with_items:
+      - vim
+      - nano
+      - sl
+      - ccze
+      - dnsutils
+      - epel-release
+     ignore_errors: yes
+   
+   - name: instalando pacotes centos
+     yum:
+      name: "{{ item }}"
+      state: present
+     with_items:
+      - vim
+      - nano
+      - sl
+      - ccze
+      - dnsutils
+      - epel-release
+     ignore_errors: yes
+
+- name: Criacao usuario no servidor
+  hosts: all
+  tasks:
+   - name: Criando o usuario no servidor
+     user:
+      name: "{{ item }}"
+      shell: /bin/bash
+      createhome: yes
+     with_items:
+      - devops
+      - rgleme
+      - developer
+      - 4linux 
