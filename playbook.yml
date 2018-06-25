@@ -1,0 +1,14 @@
+---
+- name: Resolv.conf
+  hosts: all
+  tasks:
+   - name: Enviar o resolv.conf
+     copy:
+      src: resolv.conf
+      dest: /etc/
+
+- name: Instalar Pacotes
+  hosts: devops docker
+  tasks:
+   - name: Instalar pacotes
+     apt: name=vim,htop,sysstat state=present

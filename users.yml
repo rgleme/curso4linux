@@ -1,0 +1,11 @@
+---
+- name: Criacao usuario no servidor
+  hosts: all
+  vars:
+   - username: rgleme
+  tasks:
+   - name: Criando o usuario no servidor
+     user:
+      name: "{{ username }}"
+      shell: /bin/bash
+      createhome: yes
