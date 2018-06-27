@@ -1,0 +1,8 @@
+- name: Instalar Repo
+  shell: "curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash"
+
+- name: Instalar GIT
+  apt:
+   name: gitlab-ce
+   update_cache: yes
+   state: present

@@ -1,0 +1,24 @@
+---
+# tasks file for rundeck
+- name: Instacao RUNDECK
+  hosts: automation
+  tasks:
+   - name: Instalando o REPO
+     yum:
+      name: "{{ item }}"
+      state: present
+     with_items:
+      - java-1.8.0
+      - http://repo.rundeck.org/latest.rpm
+   
+   - name: Instalando o RUNDECK
+     yum:
+      name: "{{ item }}"
+      state: present
+     with_items:
+      - rundeck
+
+   - name: Habilitando o Servico
+     service:
+      name: rundeckd
+      state: started

@@ -1,0 +1,26 @@
+---
+# tasks file for jenkins
+- name: Instalar Dependencias
+  hosts: automation
+  tasks:
+  - name: Instalar WGET
+    yum:
+     name: wget
+     state: present
+
+  - name: download conf repo
+    get_url:
+     url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+     dest: /etc/yum.repos.d/jenkins.repo
+     mode: 0440
+
+  - rpm_key:
+     state: present
+     key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+
+  - name: Instalar JENKINS
+    yum:
+     name: jenkins
+     state: present
+
+

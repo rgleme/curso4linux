@@ -1,0 +1,8 @@
+---
+# tasks file for git
+- name: Instalando o Git Lab
+  become_method: yes
+  hosts: devops
+  tasks:
+   - include: pre.yml
+   - include: install.yml
