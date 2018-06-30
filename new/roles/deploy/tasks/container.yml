@@ -1,0 +1,19 @@
+---
+- name: Criando Containers
+  hosts: docker
+  tasks:
+   - name: Criando o Container Green
+     docker_container:
+      name: green
+      image: httpd
+      state: started
+      volumes:
+       - /green:/usr/local/apache2/htdocs
+   
+   - name: Criando o Container Blue
+     docker_container:
+      name: blue
+      image: httpd
+      state: started
+      volumes:
+       - /blue:/usr/local/apache2/htdocs

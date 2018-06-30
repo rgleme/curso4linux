@@ -1,0 +1,16 @@
+---
+- name: Subir Containers
+  hosts: docker
+  remote_user: root
+  tasks:
+    - name: Subindo Container Blue
+      docker_container:
+       name: blue
+       image: httpd
+       state: started
+    
+    - name: Subindo Container Green
+      docker_container:
+       name: green
+       image: httpd
+       state: started

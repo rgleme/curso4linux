@@ -1,0 +1,61 @@
+---
+# tasks file for deploy
+
+- name: Criando o BlueGreen Deploy
+  hosts: docker
+  tasks:
+   - name: Validando o VirtualHost ativo no nginx
+     command: test -f /etc/nginx/sites-enabled/green.conf
+     register: vhost
+     ignore_errors: yes
+
+   - name: Copiando a index do Green
+     copy:
+      src: /var/lib/jenkins/workspace/deploy_green_blue/index.html
+      dest: /green/index.html
+     when: vhost.rc == 1 
+  
+   - name: Copiando a index do Blue
+     copy:
+      src: /var/lib/jenkins/workspace/deploy_green_blue/index.html
+      dest: /blue/index.html
+     when: vhost.rc == 0
+
+   - name: Pegando o IP do Green
+     shell: "docker exec green hostname -I"
+     register: ipgreen
+     when: vhost.rc == 1
+   
+   - name: Pegando o IP do Blue
+     shell: "docker exec blue hostname -I"
+     register: ipblue
+     when: vhost.rc == 0
+
+   - name: Criando o Vhost do Blue
+     template:
+      src: ../files/vhost_blue.conf
+      dest: /etc/nginx/sites-enabled/blue.conf
+     when: vhost.rc == 0
+   
+   - name: Apagando o Vhost do Green
+     file:
+      path: /etc/nginx/sites-enabled/green.conf
+      state: absent
+     when: vhost.rc == 0
+   
+   - name: Criando o Vhost do Green
+     template:
+      src: ../files/vhost_green.conf
+      dest: /etc/nginx/sites-enabled/green.conf
+     when: vhost.rc == 1
+
+   - name: Apagando o Vhost do Blue
+     file:
+      path: /etc/nginx/sites-enabled/blue.conf
+      state: absent
+     when: vhost.rc == 1
+
+   - name: Restart nginx
+     service:
+      name: nginx
+      state: restarted

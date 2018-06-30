@@ -1,0 +1,26 @@
+---
+- name: Criando pastas
+  hosts: docker
+  remote_user: root
+  tasks:
+    - file:
+        path: /blue
+        state: directory
+        owner: root
+        group: root
+        mode: 0644
+
+    - file:
+       path: /green
+       state: directory
+       owner: root
+       group: root
+       mode: 0644
+
+    - name: Instalando PIP
+      apt:
+       name: python-pip
+       state: present
+
+    - pip:
+       name: docker-py

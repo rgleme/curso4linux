@@ -1,0 +1,16 @@
+---
+- name: Instalando Dependecias Docker
+  hosts: docker
+  tasks:
+   - name: Instalando Python-PIP
+     apt:
+      name: python-pip
+
+   - name: Instalando dependencia para o docker/python
+     pip:
+      name: docker-py
+
+   - name:
+     apt:
+      name: docker-ce
+      state: present
